@@ -24,4 +24,27 @@ function onYouTubeIframeAPIReady() {
   req.send();
 }
 
+function onPlayerStateChange(event) {
+  if ( event.data == YT.PlayerState.PLAYING ) {
+    player1.playVideo();
+    player2.playVideo();
+    player1.setVolume(0);
+  }
+  if ( event.data == YT.PlayerState.PAUSED ) {
+    player1.pauseVideo();
+    player2.pauseVideo();
+  }
+  if ( event.data == YT.PlayerState.ENDED && event.target.a.id == "player2" ) {
+    index++;
+    player1.loadVideoById(videoData[index][0]);
+    player2.loadVideoById(videoData[index][1]);
+  }
+}
+
+function changeSong(move) {
+  index += move;
+  player1.loadVideoById(videoData[index][0]);
+  player2.loadVideoById(videoData[index][1]);
+}
+
 function onPlayerReady(event) {}
