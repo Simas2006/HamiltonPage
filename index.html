@@ -14,7 +14,11 @@
   <div class="jumbotron">
     <h1>Hamilton Online</h1>
   </div>
-  <h3>Aaron Burr, Sir by szin</h3>
+  <h3 id="author">Aaron Burr, Sir by szin</h3>
+  <div>
+    <button class="btn btn-primary glyphicon glyphicon-backward" onclick="changeSong(-1)"></button>
+    <button class="btn btn-primary glyphicon glyphicon-forward" onclick="changeSong(1)"></button>
+  </div>
   <hr />
   <div id="player1" class="ytplayer"></div>
   <div id="player2" class="ytplayer"></div>
@@ -23,7 +27,7 @@
     <h4 id="animators"></h4>
     <h4>
       Thank you to Lin-Manuel Miranda, and the original cast of Hamilton.<br />
-      <a href="no_github_repo_yet">Leave an issue on GitHub if you think I should update the animatics</a>
+      <a href="no_github_repo_yet">Leave an issue on GitHub if you think I should update the animatics!</a>
     </h4>
   </div>
 </body>

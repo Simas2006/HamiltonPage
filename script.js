@@ -1,5 +1,6 @@
 var videoData,player1,player2;
 var index = 0;
+var waiting = false;
 
 function onYouTubeIframeAPIReady() {
   var req = new XMLHttpRequest();
@@ -20,6 +21,14 @@ function onYouTubeIframeAPIReady() {
         "onStateChange": onPlayerStateChange
       }
     });
+    var animators = videoData.map(item => item[3].split(" (upload")[0]);
+    animators = animators.filter((item,index) => index == animators.indexOf(item));
+    animators = animators.map(item => `- ${item}\n`).join("");
+    document.getElementById("animators").innerText = "Thank you to our animators (in order of appearance): \n" + animators;
+    document.getElementById("author").innerText = videoData[index][2] + " by " + videoData[index][3];
+    setInterval(function() {
+      if ( Math.round(player1.getCurrentTime()) != Math.round(player2.getCurrentTime()) && ! waiting ) player2.seekTo(player1.getCurrentTime());
+    },500);
   }
   req.send();
 }
@@ -35,9 +44,10 @@ function onPlayerStateChange(event) {
     player2.pauseVideo();
   }
   if ( event.data == YT.PlayerState.ENDED && event.target.a.id == "player2" ) {
-    index++;
-    player1.loadVideoById(videoData[index][0]);
-    player2.loadVideoById(videoData[index][1]);
+    changeSong(1);
+  }
+  if ( event.data == YT.PlayerState.ENDED && event.target.a.id == "player1" ) {
+    waiting = true;
   }
 }
 
@@ -45,6 +55,8 @@ function changeSong(move) {
   index += move;
   player1.loadVideoById(videoData[index][0]);
   player2.loadVideoById(videoData[index][1]);
+  document.getElementById("author").innerText = videoData[index][2] + " by " + videoData[index][3];
+  waiting = false;
 }
 
 function onPlayerReady(event) {}
