@@ -52,6 +52,8 @@ function onPlayerStateChange(event) {
 }
 
 function changeSong(move) {
+  if ( move < 0 && index == 0 ) return;
+  if ( move > 0 && index + 1 >= videoData.length ) return;
   index += move;
   player1.loadVideoById(videoData[index][0]);
   player2.loadVideoById(videoData[index][1]);
