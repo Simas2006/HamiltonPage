@@ -27,7 +27,7 @@ function onYouTubeIframeAPIReady() {
     document.getElementById("animators").innerText = "Thank you to our animators (in order of appearance): \n" + animators;
     document.getElementById("author").innerText = videoData[index][2] + " by " + videoData[index][3];
     setInterval(function() {
-      if ( Math.round(player1.getCurrentTime()) != Math.round(player2.getCurrentTime()) && ! waiting ) player2.seekTo(player1.getCurrentTime());
+      if ( Math.round(player1.getCurrentTime()) - videoData[index][4] != Math.round(player2.getCurrentTime()) && ! waiting ) player2.seekTo(player1.getCurrentTime() - videoData[index][4]);
     },500);
   }
   req.send();
@@ -56,6 +56,7 @@ function changeSong(move) {
   if ( move > 0 && index + 1 >= videoData.length ) return;
   index += move;
   player1.loadVideoById(videoData[index][0]);
+  player1.seekTo(videoData[index][4]);
   player2.loadVideoById(videoData[index][1]);
   document.getElementById("author").innerText = videoData[index][2] + " by " + videoData[index][3];
   waiting = false;
