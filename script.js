@@ -26,6 +26,15 @@ function onYouTubeIframeAPIReady() {
     animators = animators.map(item => `- ${item}\n`).join("");
     document.getElementById("animators").innerText = "Thank you to our animators (in order of appearance): \n" + animators;
     document.getElementById("author").innerText = videoData[index][2] + " by " + videoData[index][3];
+    var box = document.getElementById("song-dropdown");
+    for ( var i = 0; i < videoData.length; i++ ) {
+      var item = document.createElement("li");
+      var a = document.createElement("a");
+      a.innerText = videoData[i][2] + " by " + videoData[i][3];
+      a.href = "javascript: changeSong(" + i + ",true)";
+      item.appendChild(a);
+      box.appendChild(item);
+    }
     setInterval(function() {
       if ( Math.round(player1.getCurrentTime()) - videoData[index][4] != Math.round(player2.getCurrentTime()) && ! waiting ) player2.seekTo(player1.getCurrentTime() - videoData[index][4]);
     },500);
@@ -51,10 +60,11 @@ function onPlayerStateChange(event) {
   }
 }
 
-function changeSong(move) {
-  if ( move < 0 && index == 0 ) return;
-  if ( move > 0 && index + 1 >= videoData.length ) return;
-  index += move;
+function changeSong(move,set) {
+  if ( move < 0 && index == 0 && ! set ) return;
+  if ( move > 0 && index + 1 >= videoData.length && ! set ) return;
+  if ( ! set ) index += move;
+  else index = move;
   player1.loadVideoById(videoData[index][0]);
   player1.seekTo(videoData[index][4]);
   player2.loadVideoById(videoData[index][1]);

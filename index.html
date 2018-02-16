@@ -18,6 +18,12 @@
   <div>
     <button class="btn btn-primary glyphicon glyphicon-backward" onclick="changeSong(-1)"></button>
     <button class="btn btn-primary glyphicon glyphicon-forward" onclick="changeSong(1)"></button>
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Select a Song <b class="caret"></b>
+      </button>
+      <ul class="dropdown-menu" id="song-dropdown"></ul>
+    </div>
   </div>
   <hr />
   <div id="player1" class="ytplayer"></div>
